@@ -1,233 +1,151 @@
 import mysql.connector
+	
+def getConexao():
+	conexao = mysql.connector.connect(user='admin', password ='admin123', database='matricula')
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="admin",
-  password="admin123",
-  database="matricula"
-)
-
-mycursor = mydb.cursor()
-
-print(mydb)
-
-matricula = []
+	return conexao
 
 
 def cadastrarAluno():
-    print("cadastrando")
-    dados = {"nome": input('Digite o nome')}
-    valores = (dados["nome"], )
-    sql = "insert into alunos(nome) values (%s, %s, %s)"
-    mycursor.execute(sql, valores) 
-    mydb.commit()
+	aluno = input('Digite o aluno: ')
+	senha = input('Digite a senha: ')
+	email = input('Digite o email: ')
+	sql = "INSERT INTO matricula (aluno, senha, email) VALUES (%s, %s, %s)"
+	val = (aluno, senha, email)
+	mycursor.execute(sql, val)
+	conexao.commit()
+	conexao = getConexao()
+	cursor = conexao.cursor()
+
+	while True:
+		novoaluno = input('Novo aluno? (S/n)')
+		if novoaluno == 'n':
+			break
+		listaralunos()
+		id_aluno = int(input('Informe o ID do aluno ou 0 para novo: '))
+		if id_aluno == 0:
+			alunos.append(input('aluno: '))
+		else:		
+			id_alunos.append(id_aluno)
 
 def cadastrarCurso():
-    print("cadastrando")
-    dados = {"nome": input('Digite o nome')}
-    valores = (dados["nome"], )
-    sql = "insert into cursos (nome) values (%s, %s, %s)"
-    mycursor.execute(sql, valores) 
-    mydb.commit()
+	nome = input('Digite o nome: ')
+	sql = "INSERT INTO curso (nome) VALUES (%s)"
+	val = (nome)
+	mycursor.execute(sql, val)
+	conexao.commit()
 
 def listarAluno():
-    print("listar")
-    mycursor.execute("SELECT * FROM alunos")
+	mycursor.execute("SELECT * FROM Alunos")
 
-    myresult = mycursor.fetchall()
+	myresult = mycursor.fetchall()
 
-    for x in myresult:
-        print(x)
-
-def listarCurso():
-    print("listar")
-    mycursor.execute("SELECT * FROM cursos")
-
-    myresult = mycursor.fetchall()
-
-    for x in myresult:
-        print(x)
-
-def deletarAluno():
-    id = input("Digite o id")
-    valores = (id, )
-    sql = "DELETE FROM alunos WHERE id = %s, %s, %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) deletado(s)")
-
-def deletarCurso():
-    id = input("Digite o id")
-    valores = (id, )
-    sql = "DELETE FROM cursos WHERE id = %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) deletado(s)")
-
-def atualizarAluno():
-    id = input("Digite o id")
-    nome = input("Digite o nome")
-    valores = (id, nome, )
-
-    sql = "UPDATE alunos SET nome = %s WHERE id = %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) afetado(s)")
-    print('cadastrando')
-    nome = input('Digite o nome do aluno')
-    senha = input('Digite o senha')
-    email = input('Digite o email')
-    valores = (nome, senha, email, )
-    sql = "insert into aluno(nome, senha, email) values (%s, %s, %s)"
-    mycursor.execute(sql, valores) 
-    mydb.commit()
-
-def atualizarCurso():
-    id = input("Digite o id")
-    nome = input("Digite o nome")
-    valores = (id, nome, )
-
-    sql = "UPDATE curso SET nome = %s WHERE id = %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) afetado(s)")
-    print('cadastrando')
-    nome = input('Digite o nome')
-    materia = input('Digite a materia')
-    hora = input('Digite a hora do seu curso')
-    valores = (nome, materia, hora, )
-    sql = "insert into curso(nome, materia, hora) values (%s, %s, %s)"
-    mycursor.execute(sql, valores) 
-    mydb.commit()
-
-def listarAluno():
-    print("listar")
-    mycursor.execute("SELECT * FROM aluno")
-
-    myresult = mycursor.fetchall()
-
-    for x in myresult:
-        print(x)
+	for x in myresult:
+  		print(x)
 
 def listarCurso():
-    print("listar")
-    mycursor.execute("SELECT * FROM curso")
+	mycursor.execute("SELECT * FROM curso")
 
-    myresult = mycursor.fetchall()
+	myresult = mycursor.fetchall()
 
-    for x in myresult:
-        print(x)
-
-def deletarAluno():
-    id = input("numero do id")
-    valores = (id, )
-    sql = "DELETE FROM aluno WHERE id = %s, %s, %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) deletado(s)")
-
-def deletarCurso():
-    id = input("numero do id")
-    valores = (id, )
-    sql = "DELETE FROM curso WHERE id = %s"
-
-    mycursor.execute(sql, valores)
-
-    mydb.commit()
-
-    print(mycursor.rowcount, "registro(s) deletado(s)")
-
+	for x in myresult:
+  		print(x)
+			
 def atualizarAluno():
-    id = input("Digite o id")
-    nome = input("Digite o nome")
-    valores = (id, nome, )
+	mycursor = conexao.cursor()
 
-    sql = "UPDATE aluno SET nome = %s WHERE id = %s, %s, %s"
+	id = input('Digite o id: ')
+	novo_aluno = input('Digite um novo valor: ')
+	nova_senha = input('Digite uma nova senha: ')
+	novo_preco = input('Digite um novo email: ')
 
-    mycursor.execute(sql, valores)
+	sql = 'UPDATE aluno SET nome, senha, email = %s, %s, %s WHERE id = %s'
+	values = (novo_aluno, nova_senha, novo_preco)
 
-    mydb.commit()
+	mycursor.execute(sql, values)
 
-    print(mycursor.rowcount, "registro(s) afetado(s)")
-")
+	mydb.commit()
+
+	print(mycursor.rowcount, "record(s) affected")
 
 def atualizarCurso():
-    id = input("Digite o id")
-    nome = input("Digite o nome")
-    valores = (id, nome, )
 
-    sql = "UPDATE aluno SET nome = %s WHERE id = %s"
+	id = input('Digite o id: ')
+	novo_nome = input('Digite um novo nome: ')
+	sql = 'UPDATE curso SET nome = %s WHERE id = %s'
+	values = (novo_nome)
 
-    mycursor.execute(sql, valores)
+	mycursor.execute(sql, values)
 
-    mydb.commit()
+	mydb.commit()
 
-    print(mycursor.rowcount, "registro(s) afetado(s)")
-")
+	print(mycursor.rowcount, "registro(s) afetado")
 
-def juntar_tabelas():
-    sql= "SELECT \
-        aluno.nome AS aluno, \
-        curso.nome AS aluno \
-        FROM aluno \
-        INNER JOIN alunos ON aluno.id_aluno = alunos.nome"
+def apagarAluno():
+	
+	sql = 'DELETE FROM aluno WHERE id = %s'
 
-    mycursor.execute(sql)
+	mycursor.execute(sql)
 
-    myresult = mycursor.fetchall()
+	conexao.commit()
 
-    for x in myresult:
-        print(x)
+	print(mycursor.rowcount, "registro(s) apagado")
 
+def apagarCurso():
+
+	sql = 'DELETE FROM aluno WHERE id = %s '
+	mycursor.execute(sql)
+
+	conexao.commit()
+
+	print(mycursor.rowcount, "registro(s) apagado")
+
+def juntarTabelas():
+
+	sql = "SELECT \
+		aluno.nome AS aluno, \
+		curso.nome AS curso \
+		FROM alunos  \
+		INNER JOIN alunos ON aluno.id_curso = curso.id"
+
+	mycursor.execute(sql)
+
+	myresult = mycursor.fetchall()
+
+	for x in myresult:
+  		print(x)
+		
 while True:
-    print('1.cadastrar aluno')
-    print('2.cadastrar curso')
-    print('3.listar aluno')
-    print('4.listar curso')
-    print('6.deletar aluno')
-    print('7.deletar curso')
-    print('8.atualizar aluno')
-    print('9.atualizar curso')
-    print('10.juntar tabelas')
-    print('11.break')
-    
-    if opcao == 1:
-        cadastrarAluno()
-    elif opcao == 2:
-        cadastrarCurso()
-    elif opcao == 3:
-        listarAluno()
-    elif opcao == 4:
-        listarCurso()
-    elif opcao == 6:
-        deletarAluno()
-    elif opcao == 7:
-        deletarCurso()
-    elif opcao == 8:
-        atualizarAluno()
-    elif opcao == 9:
-        atualizarCurso()
-    elif opcao == 9:
-        apagarAluno()
-    elif opcao == 9:
-        apagarCurso()
-    elif opcao == 10:
-        juntarTabelas()
-    else: 
-        print('exit')
-        break
+	print('1. Cadastrar alunos')
+	print('2. Cadastrar curso')
+	print('3. Listar alunos')
+	print('4. Listar curso')
+	print('5. Atualizar alunos')
+	print('6. Atualizar curso')
+	print('7. Apagar aluno')
+	print('8. Apagar curso')
+	print('9. Juntar tabelas')
+	print('10. break')
+	
+	opcao = int(input())
+	if opcao == 1:
+		cadastrarAluno()
+	elif opcao == 2:
+		cadastrarCurso()
+	elif opcao == 3:
+		listarAluno()
+	elif opcao == 4:
+		listarCurso()
+	elif opcao == 5:
+		atualizarAluno()
+	elif opcao == 6:
+		atualizarCurso()
+	elif opcao == 7:
+		apagarAluno()
+	elif opcao == 8:
+		apagarCurso()
+	elif opcao == 9:
+		juntarTabelas()
+	else:
+		print('sair')
+		break
