@@ -57,7 +57,7 @@ def deletarAluno():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) deleted")
+    print(mycursor.rowcount, "registro(s) deletado(s)")
 
 def deletarCurso():
     id = input("Digite o id")
@@ -68,7 +68,7 @@ def deletarCurso():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) deleted")
+    print(mycursor.rowcount, "registro(s) deletado(s)")
 
 def atualizarAluno():
     id = input("Digite o id")
@@ -139,7 +139,7 @@ def deletarAluno():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) deleted")
+    print(mycursor.rowcount, "registro(s) deletado(s)")
 
 def deletarCurso():
     id = input("numero do id")
@@ -150,7 +150,7 @@ def deletarCurso():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) deleted")
+    print(mycursor.rowcount, "registro(s) deletado(s)")
 
 def atualizarAluno():
     id = input("Digite o id")
@@ -163,7 +163,8 @@ def atualizarAluno():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) affected")
+    print(mycursor.rowcount, "registro(s) afetado(s)")
+")
 
 def atualizarCurso():
     id = input("Digite o id")
@@ -176,7 +177,8 @@ def atualizarCurso():
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record(s) affected")
+    print(mycursor.rowcount, "registro(s) afetado(s)")
+")
 
 def juntar_tabelas():
     sql= "SELECT \
@@ -228,6 +230,4 @@ while True:
         juntarTabelas()
     else: 
         print('exit')
-        break 
-    
-    
+        break
